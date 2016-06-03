@@ -1,0 +1,51 @@
+" Basics {
+    set nocompatible        " Must be first line
+    set background=dark     " Assume a dark background
+" }
+
+" Setup Bundle Support {
+    set rtp+=~/.vim/bundle/vundle
+    call vundle#rc()
+" }
+
+" Deps {
+    Bundle 'gmarik/vundle'
+" }
+
+" General {
+    Bundle 'scrooloose/nerdtree'
+    ""Bundle 'spf13/vim-colors'
+    Bundle 'altercation/vim-colors-solarized'
+    Bundle 'spf13/vim-autoclose'
+    Bundle 'kien/ctrlp.vim'
+    Bundle 'vim-scripts/vim-auto-save'
+    Bundle 'bling/vim-airline'
+    Bundle 'Lokaltog/vim-easymotion'
+    Bundle 'jistr/vim-nerdtree-tabs'
+    Bundle 'flazz/vim-colorschemes'
+    Bundle 'nathanaelkane/vim-indent-guides'
+    Bundle 'tpope/vim-abolish.git'
+    Bundle 'mustache/vim-mustache-handlebars'
+    ""Bundle 'mileszs/ack.vim'
+" }
+
+" General Programing {
+    Bundle 'scrooloose/syntastic'
+    Bundle 'tpope/vim-fugitive'
+    Bundle 'scrooloose/nerdcommenter'
+    Bundle 'ervandew/supertab'
+" }
+
+" PHP {
+    Bundle "vim-scripts/php.vim"
+    Bundle 'Janiczek/vim-latte'
+" }
+
+" HTML {
+    Bundle 'hail2u/vim-css3-syntax'
+    Bundle 'gorodinskiy/vim-coloresque'
+" }
+
+" Ruby {
+    Bundle 'tpope/vim-rails'
+" }
