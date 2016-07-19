@@ -1,10 +1,8 @@
 " Environment {
-
     " Basics {
         set nocompatible        " Must be first line
-        set shell=/bin/sh
+        set shell=/bin/zsh
     " }
-
 " }
 
 " Use bundles config {
@@ -14,37 +12,23 @@
 " }
 
 " General {
-
-    set background=dark         " Assume a dark background
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
     set mouse=                  " Automatically enable mouse usage
     set mousehide               " Hide the mouse cursor while typing
+    set encoding=utf-8
     scriptencoding utf-8
-
-    if has('clipboard')
-        if has('unnamedplus')  " When possible use + register for copy-paste
-            set clipboard=unnamedplus
-        else         " On mac and Windows, use * register for copy-paste
-            set clipboard=unnamed
-        endif
-    endif
-
-    " Most prefer to automatically switch to the current file directory when
-    " a new buffer is opened; to prevent this behavior, add the following to
-    " your .vimrc.before.local file:
-    "   let g:spf13_no_autochdir = 1
-    if !exists('g:spf13_no_autochdir')
-        autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
-        " Always switch to the current file directory
-    endif
 
     set shortmess+=filmnrxoOtT          " Abbrev. of messages (avoids 'hit enter')
     set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
     set virtualedit=onemore             " Allow for cursor beyond last character
-    set history=1000                    " Store a ton of history (default is 20)
+    set nobackup
+    set nowritebackup
+    set noswapfile
+    set history=50                    " Store a ton of history (default is 20)
     set spell                           " Spell checking on
     set hidden                          " Allow buffer switching without saving
+    set colorcolumn=120                 " Set right margin
 
     " Instead of reverting the cursor to the last position in the buffer, we
     " set it to the first line when editing a git commit message
@@ -67,21 +51,9 @@
             autocmd BufWinEnter * call ResCur()
         augroup END
     endif
-
-    " Setting up the directories {
-        set backup                  " Backups are nice ...
-        if has('persistent_undo')
-            set undofile                " So is persistent undo ...
-            set undolevels=1000         " Maximum number of changes that can be undone
-            set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
-        endif
-
-    " }
-
 " }
 
 " Vim UI {
-
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
 
@@ -128,10 +100,10 @@
     set list
     set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 
+    set wildignore+=*/tmp/*
 " }
 
 " Formatting {
-
     set nowrap                      " Do not wrap long lines
     set autoindent                  " Indent at the same level of the previous line
     set shiftwidth=2                " Use indents of 4 spaces
@@ -151,23 +123,15 @@
     autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
     autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-    autocmd FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2
     " preceding line best in a plugin but here for now.
 
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-
-    " Workaround vim-commentary for Haskell
-    autocmd FileType haskell setlocal commentstring=--\ %s
-    " Workaround broken colour highlighting in Haskell
-    autocmd FileType haskell setlocal nospell
-
 " }
 
 " Key (re)Mappings {
-
   let mapleader = ','
 
-  "map <Leader><Leader> <c-^>
+  map .. <c-^>
 
   map <C-J> <C-W>j
   map <C-K> <C-W>k
@@ -177,7 +141,6 @@
   " Wrapped lines goes down/up to next row, rather than next line in file.
   noremap j gj
   noremap k gk
-
 
   " Visual shifting (does not exit Visual mode)
   vnoremap < <gv
@@ -194,11 +157,19 @@
   map <Leader>s :w<CR>
   map <Leader>v <C-w>v
   map <Leader>h <C-w>s
-  map <Leader>g :!cd public/ && gulp<CR><CR>
-
+  map <Leader>ct :!ctags -R .<CR>
+  map <Leader>a :Ack
 " }
 
 " Plugins {
+"
+    " CTRLP {
+        let g:ctrlp_root_markers = ['.ruby-version']
+        let g:ctrlp_show_hidden=1
+        let g:ctrlp_match_window = 'bottom'
+        let g:ctrlp_switch_buffer = 1
+        let g:ctrlp_working_path_mode = 0
+    " }
 
     " PIV {
         let g:DisableAutoPHPFolding = 0
@@ -222,19 +193,23 @@
         nmap <leader>nt :NERDTreeFind<CR>
 
         let NERDTreeShowBookmarks=1
-        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', '\.idea', '\.sass-cache']
         let NERDTreeChDirMode=0
         let NERDTreeQuitOnOpen=1
         let NERDTreeMouseMode=2
         let NERDTreeShowHidden=1
         let NERDTreeKeepTreeInNewTab=1
         let g:nerdtree_tabs_open_on_gui_startup=0
+        let NERDTreeShowLineNumbers=1
     " }
 
     " indent_guides {
+        let g:indent_guides_auto_colors = 0
         let g:indent_guides_start_level = 2
         let g:indent_guides_guide_size = 1
         let g:indent_guides_enable_on_vim_startup = 1
+        autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd guibg=#1c1c1c ctermbg=234
+        autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#1c1c1c ctermbg=234
     " }
 
     " vim-airline {
@@ -249,7 +224,7 @@
         " See `:echo g:airline_theme_map` for some more choices
         " Default in terminal vim is 'dark'
         if !exists('g:airline_theme')
-            let g:airline_theme = 'ubaryd'
+            "let g:airline_theme = 'ubaryd'
         endif
         if !exists('g:airline_powerline_fonts')
             " Use the default set of separators with a few customizations
@@ -257,6 +232,7 @@
             let g:airline_right_sep='‹' " Slightly fancier than '<'
         endif
         let g:airline_powerline_fonts=1
+        let g:Powerline_symbols='unicode'
     " }
 
     " Auto save {
@@ -264,76 +240,21 @@
       let g:auto_save_in_insert_mode = 0  " do not save while in insert mode"
     " }
 
+    " Syntastic {
+      let g:syntastic_check_on_open=1
+    " }
 " }
 
 " GUI Settings {
-
-    " GVIM- (here instead of .gvimrc)
-    if has('gui_running')
-        set guioptions-=T           " Remove the toolbar
-        set lines=40                " 40 lines of text instead of 24
-        if !exists("g:spf13_no_big_font")
-            if has("gui_running")
-                set guifont=Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
-            endif
-        endif
-    else
-        if &term == 'xterm' || &term == 'screen'
-            set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-        endif
-        "set term=builtin_ansi       " Make arrow and other keys work
+    if &term == 'xterm' || &term == 'screen'
+        set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
     endif
 
     color solarized
-    colorscheme railscasts-petr
-
+    colorscheme railscasts
 " }
 
 " Functions {
-
-    " Initialize directories {
-    function! InitializeDirectories()
-        let parent = $HOME
-        let prefix = 'vim'
-        let dir_list = {
-                    \ 'backup': 'backupdir',
-                    \ 'views': 'viewdir',
-                    \ 'swap': 'directory' }
-
-        if has('persistent_undo')
-            let dir_list['undo'] = 'undodir'
-        endif
-
-        " To specify a different directory in which to place the vimbackup,
-        " vimviews, vimundo, and vimswap files/directories, add the following to
-        " your .vimrc.before.local file:
-        "   let g:spf13_consolidated_directory = <full path to desired directory>
-        "   eg: let g:spf13_consolidated_directory = $HOME . '/.vim/'
-        if exists('g:spf13_consolidated_directory')
-            let common_dir = g:spf13_consolidated_directory . prefix
-        else
-            let common_dir = parent . '/.' . prefix
-        endif
-
-        for [dirname, settingname] in items(dir_list)
-            let directory = common_dir . dirname . '/'
-            if exists("*mkdir")
-                if !isdirectory(directory)
-                    call mkdir(directory)
-                endif
-            endif
-            if !isdirectory(directory)
-                echo "Warning: Unable to create backup directory: " . directory
-                echo "Try: mkdir -p " . directory
-            else
-                let directory = substitute(directory, " ", "\\\\ ", "g")
-                exec "set " . settingname . "=" . directory
-            endif
-        endfor
-    endfunction
-    call InitializeDirectories()
-    " }
-
     " Initialize NERDTree as needed {
     function! NERDTreeInitAsNeeded()
         redir => bufoutput
@@ -384,5 +305,4 @@
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
     " }
-
 " }
