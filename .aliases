@@ -1,0 +1,16 @@
+# paths
+alias p="cd /code/boom_all/pro"
+alias a="cd /code/boom_all/api"
+alias c="cd /code/boom_crm"
+alias co="cd /code"
+alias db="cd /code/db"
+alias fl="cd /code/files"
+
+# rails
+alias migrate="rake db:migrate && rake db:rollback && rake db:migrate && rake db:test:prepare"
+alias prepare="bundle install && rake db:migrate && rake db:test:prepare"
+
+# git
+alias gps="git ps"
+alias gst="git st"
+alias gpl="git pl"
