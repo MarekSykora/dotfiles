@@ -25,32 +25,26 @@
     set nobackup
     set nowritebackup
     set noswapfile
-    set history=50                    " Store a ton of history (default is 20)
-    set spell                           " Spell checking on
+    set history=1000                    " Store a ton of history (default is 20)
+    set nospell                           " Spell checking off
     set hidden                          " Allow buffer switching without saving
     set colorcolumn=120                 " Set right margin
 
-    " Instead of reverting the cursor to the last position in the buffer, we
-    " set it to the first line when editing a git commit message
+    " set cursor to the first line in git commit message
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
-    " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
     " Restore cursor to file position in previous editing session
-    " To disable this, add the following to your .vimrc.before.local file:
-    "   let g:spf13_no_restore_cursor = 1
-    if !exists('g:spf13_no_restore_cursor')
-        function! ResCur()
-            if line("'\"") <= line("$")
-                normal! g`"
-                return 1
-            endif
-        endfunction
+    function! ResCur()
+        if line("'\"") <= line("$")
+            normal! g`"
+            return 1
+        endif
+    endfunction
 
-        augroup resCur
-            autocmd!
-            autocmd BufWinEnter * call ResCur()
-        augroup END
-    endif
+    augroup resCur
+        autocmd!
+        autocmd BufWinEnter * call ResCur()
+    augroup END
 " }
 
 " Vim UI {
@@ -63,37 +57,16 @@
     highlight clear LineNr          " Current line number row will have same background color in relative mode
     let g:CSApprox_hook_post = ['hi clear SignColumn']
 
-    if has('cmdline_info')
-        set ruler                   " Show the ruler
-        set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
-        set showcmd                 " Show partial commands in status line and
-                                    " Selected characters/lines in visual mode
-    endif
+    set ruler                   " Show the ruler
+    set showcmd                 " Show partial commands in status line and
 
-    if has('statusline')
-        set laststatus=2
+    set laststatus=2
 
-        " Broken down into easily includeable segments
-        set statusline=%<%f\                     " Filename
-        set statusline+=%w%h%m%r                 " Options
-        set statusline+=%{fugitive#statusline()} " Git Hotness
-        set statusline+=\ [%{&ff}/%Y]            " Filetype
-        set statusline+=\ [%{getcwd()}]          " Current dir
-        set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-    endif
-
-    set backspace=indent,eol,start  " Backspace for dummies
-    set linespace=0                 " No extra spaces between rows
     set nu                          " Line numbers on
-    set showmatch                   " Show matching brackets/parenthesis
     set incsearch                   " Find as you type search
-    set hlsearch                    " Highlight search terms
-    set winminheight=0              " Windows can be 0 line high
     set ignorecase                  " Case insensitive search
-    set smartcase                   " Case sensitive when uc present
     set wildmenu                    " Show list instead of just completing
     set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
-    set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
     set scrolljump=5                " Lines to scroll when cursor leaves screen
     set scrolloff=3                 " Minimum lines to keep above and below cursor
     set foldenable                  " Auto fold code
@@ -101,29 +74,17 @@
     set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 
     set wildignore+=*/tmp/*
+    set wildignore+=*/.sass-cache/*
 " }
 
 " Formatting {
     set nowrap                      " Do not wrap long lines
-    set autoindent                  " Indent at the same level of the previous line
     set shiftwidth=2                " Use indents of 4 spaces
     set expandtab                   " Tabs are spaces, not tabs
     set tabstop=2                   " An indentation every four columns
     set softtabstop=2               " Let backspace delete indent
-    set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
     set splitright                  " Puts new vsplit windows to the right of the current
     set splitbelow                  " Puts new split windows to the bottom of the current
-    "set matchpairs+=<:>             " Match, to be used with %
-    set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
-    "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
-    " Remove trailing whitespaces and ^M chars
-    " To disable the stripping of whitespace, add the following to your
-    " .vimrc.before.local file:
-    "   let g:spf13_keep_trailing_whitespace = 1
-    autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
-    autocmd FileType go autocmd BufWritePre <buffer> Fmt
-    autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-    " preceding line best in a plugin but here for now.
 
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 " }
@@ -137,6 +98,8 @@
   map <C-K> <C-W>k
   map <C-L> <C-W>l
   map <C-H> <C-W>h
+
+  map <C-_> <Leader>c<Space>
 
   " Wrapped lines goes down/up to next row, rather than next line in file.
   noremap j gj
@@ -188,7 +151,7 @@
     " }
 
     " NerdTree {
-        map <C-e> <plug>NERDTreeTabsToggle<CR>
+        map <C-e> :NERDTreeToggle<CR>
         map <leader>e :NERDTreeFind<CR>
         nmap <leader>nt :NERDTreeFind<CR>
 
@@ -235,22 +198,13 @@
         let g:Powerline_symbols='unicode'
     " }
 
-    " Auto save {
-      let g:auto_save = 1
-      let g:auto_save_in_insert_mode = 0  " do not save while in insert mode"
-    " }
-
     " Syntastic {
       let g:syntastic_check_on_open=1
     " }
 " }
 
 " GUI Settings {
-    if &term == 'xterm' || &term == 'screen'
-        set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-    endif
-
-    color solarized
+    set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
     colorscheme railscasts
 " }
 
@@ -266,20 +220,6 @@
             NERDTreeFind
             wincmd l
         endif
-    endfunction
-    " }
-
-    " Strip whitespace {
-    function! StripTrailingWhitespace()
-        " Preparation: save last search, and cursor position.
-        let _s=@/
-        let l = line(".")
-        let c = col(".")
-        " do the business:
-        %s/\s\+$//e
-        " clean up: restore previous search history, and cursor position
-        let @/=_s
-        call cursor(l, c)
     endfunction
     " }
 
@@ -303,6 +243,5 @@
     endfunction
 
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
-    " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
     " }
 " }

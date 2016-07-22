@@ -14,28 +14,27 @@
 
 " General {
     Bundle 'scrooloose/nerdtree'
-    Bundle 'altercation/vim-colors-solarized'
-    Bundle 'spf13/vim-autoclose'
     Bundle 'kien/ctrlp.vim'
-    Bundle 'vim-scripts/vim-auto-save'
     Bundle 'bling/vim-airline'
     Bundle 'vim-airline/vim-airline-themes'
     Bundle 'Lokaltog/vim-easymotion'
-    Bundle 'jistr/vim-nerdtree-tabs'
     Bundle 'flazz/vim-colorschemes'
     Bundle 'nathanaelkane/vim-indent-guides'
-    Bundle 'tpope/vim-abolish.git'
-    Bundle 'mustache/vim-mustache-handlebars'
     Bundle 'mileszs/ack.vim'
     Bundle 'vim-scripts/ctags.vim'
+" }
+
+" Git {
+    Bundle 'tpope/vim-fugitive'
     Bundle 'airblade/vim-gitgutter'
 " }
 
 " General Programing {
     Bundle 'scrooloose/syntastic'
-    Bundle 'tpope/vim-fugitive'
+    Bundle 'spf13/vim-autoclose'
     Bundle 'scrooloose/nerdcommenter'
     Bundle 'ervandew/supertab'
+    Bundle 'tpope/vim-endwise'
 " }
 
 " PHP {
@@ -47,7 +46,10 @@
     Bundle 'gorodinskiy/vim-coloresque'
 " }
 
-" Ruby {
+" Ruby on Rails {
+    Bundle 'vim-ruby/vim-ruby'
     Bundle 'tpope/vim-rails'
     Bundle 'kchmck/vim-coffee-script'
+    Bundle 'tpope/vim-haml'
+    Bundle 'morhetz/gruvbox'
 " }
