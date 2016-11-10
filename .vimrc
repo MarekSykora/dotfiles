@@ -87,6 +87,7 @@
     set splitbelow                  " Puts new split windows to the bottom of the current
 
     autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+    autocmd BufNewFile,BufRead *.hamlc set filetype=haml
 " }
 
 " Key (re)Mappings {
@@ -120,8 +121,12 @@
   map <Leader>s :w<CR>
   map <Leader>v <C-w>v
   map <Leader>h <C-w>s
+  " Refresh tags file
   map <Leader>ct :!ctags -R .<CR>
   map <Leader>a :Ack
+  " use AckGrep
+  " open current buffer file location
+  map <Leader>r :NERDTreeFind<CR>
 " }
 
 " Plugins {
@@ -199,7 +204,9 @@
     " }
 
     " Syntastic {
-      let g:syntastic_check_on_open=1
+      let g:syntastic_check_on_open=0
+      let g:syntastic_enable_signs=0
+      let g:syntastic_echo_current_error=0
     " }
 " }
 
@@ -244,4 +251,10 @@
 
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " }
+" }
+"
+" Performance {
+    set lazyredraw
+    set ttyfast
+    let loaded_matchparen = 1 " disable parenthes highlighting
 " }
