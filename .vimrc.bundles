@@ -4,9 +4,23 @@
 " }
 
 " Setup Bundle Support {
-    set rtp+=~/.vim/bundle/vundle
-    call vundle#rc()
+    "set rtp+=~/.vim/bundle/vundle
+    "set rtp+=~/.config/nvim/bundle/vundle
+    "call vundle#rc()
 " }
+"
+" Setting up Vundle - the vim plugin bundler
+let vundle_installed=1
+let vundle_readme=s_editor_root . '/bundle/vundle/README.md'
+if !filereadable(vundle_readme)
+    echo "Installing Vundle.."
+    echo ""
+    silent call mkdir(s_editor_root . '/bundle', "p")
+    silent execute "!git clone https://github.com/gmarik/vundle " . s_editor_root . "/bundle/vundle"
+    let vundle_installed=0
+endif
+let &rtp = &rtp . ',' . s_editor_root . '/bundle/vundle/'
+call vundle#rc(s_editor_root . '/bundle')
 
 " Deps {
     Bundle 'gmarik/vundle'
@@ -15,6 +29,7 @@
 " General {
     Bundle 'scrooloose/nerdtree'
     Bundle 'kien/ctrlp.vim'
+    Bundle 'vim-scripts/vim-auto-save'
     Bundle 'bling/vim-airline'
     Bundle 'vim-airline/vim-airline-themes'
     Bundle 'Lokaltog/vim-easymotion'

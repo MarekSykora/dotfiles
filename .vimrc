@@ -1,3 +1,11 @@
+let g:ruby_path = system('echo $HOME/.rbenv/shims')
+
+if has('nvim')
+    let s_editor_root=expand("~/.config/nvim")
+else
+    let s_editor_root=expand("~/.vim")
+endif
+
 " Environment {
     " Basics {
         set nocompatible        " Must be first line
@@ -75,6 +83,16 @@
 
     set wildignore+=*/tmp/*
     set wildignore+=*/.sass-cache/*
+
+    set rnu
+    au BufEnter * :set rnu
+    au BufLeave * :set nu
+    au WinEnter * :set rnu
+    au WinLeave * :set nu
+    au InsertEnter * :set nu
+    au InsertLeave * :set rnu
+    au FocusLost * :set nu
+    au FocusGained * :set rnu
 " }
 
 " Formatting {
@@ -94,6 +112,9 @@
   let mapleader = ','
 
   map .. <c-^>
+
+  " disable recording
+  map q <Nop>
 
   map <C-J> <C-W>j
   map <C-K> <C-W>k
@@ -211,8 +232,18 @@
 " }
 
 " GUI Settings {
-    set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+    if has('nvim')
+      set termguicolors
+      let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    else
+      set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+    endif
     colorscheme railscasts
+" }
+
+" Auto save {
+    let g:auto_save = 1
+    "let g:auto_save_in_insert_mode = 0  " do not save while in insert mode"
 " }
 
 " Functions {
@@ -254,7 +285,7 @@
 " }
 "
 " Performance {
-    set lazyredraw
-    set ttyfast
+    "set lazyredraw
+    "set ttyfast
     let loaded_matchparen = 1 " disable parenthes highlighting
 " }
