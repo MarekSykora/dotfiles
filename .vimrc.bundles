@@ -37,6 +37,10 @@ call vundle#rc(s_editor_root . '/bundle')
     Bundle 'nathanaelkane/vim-indent-guides'
     Bundle 'mileszs/ack.vim'
     Bundle 'vim-scripts/ctags.vim'
+    Bundle 'vim-scripts/gitignore'
+    Bundle 'godlygeek/tabular'
+    Bundle 'wikitopian/hardmode'
+    Bundle 'takac/vim-hardtime'
 " }
 
 " Git {

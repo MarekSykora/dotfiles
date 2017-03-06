@@ -153,6 +153,18 @@ endif
 " Plugins {
 "
     " CTRLP {
+        let g:ctrlp_use_caching = 0
+        if executable('ag')
+          set grepprg=ag\ --nogroup\ --nocolor
+
+          let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+        else
+          let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+          let g:ctrlp_prompt_mappings = {
+                \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+                \ }
+        endif
+
         let g:ctrlp_root_markers = ['.ruby-version']
         let g:ctrlp_show_hidden=1
         let g:ctrlp_match_window = 'bottom'
@@ -242,7 +254,7 @@ endif
 " }
 
 " Auto save {
-    let g:auto_save = 1
+    "let g:auto_save = 1
     "let g:auto_save_in_insert_mode = 0  " do not save while in insert mode"
 " }
 
@@ -288,4 +300,31 @@ endif
     "set lazyredraw
     "set ttyfast
     let loaded_matchparen = 1 " disable parenthes highlighting
+" }
+" Hardmode {
+    autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+    nnoremap <leader>H <Esc>:call ToggleHardMode()<CR>
+    let g:HardMode_level = 'wannabe'
+" }
+" Hardtime {
+    let g:hardtime_default_on = 1
+" }
+" Easymotion {
+"
+    let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+    " Jump to anywhere you want with minimal keystrokes, with just one key binding.
+    " `s{char}{label}`
+    nmap s <Plug>(easymotion-overwin-f)
+    " or
+    " `s{char}{char}{label}`
+    " Need one more keystroke, but on average, it may be more comfortable.
+    "nmap s <Plug>(easymotion-overwin-f2)
+
+    " Turn on case insensitive feature
+    let g:EasyMotion_smartcase = 1
+
+    " JK motions: Line motions
+    map <Leader>j <Plug>(easymotion-j)
+    map <Leader>k <Plug>(easymotion-k)
 " }
