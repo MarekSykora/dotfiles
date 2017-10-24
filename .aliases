@@ -9,7 +9,8 @@ alias fl="cd /code/files"
 # rails
 alias migrate="rake db:migrate && rake db:rollback && rake db:migrate && rake db:test:prepare"
 alias prepare="bundle install && rake db:migrate && rake db:test:prepare"
-alias u="unicorn -c config/unicorn.rb"
+alias u="rm -rf log/*.log && unicorn -c config/unicorn.rb"
+alias us="rm -rf log/*.log && unicorn -c config/unicorn_subserver.rb"
 
 # git
 alias gps="git ps"
@@ -19,3 +20,6 @@ alias gpl="git pl"
 #neovim
 alias vim="nvim"
 alias vi="nvim"
+
+#stuff
+alias fixtime="sudo ntpdate time.nist.gov"

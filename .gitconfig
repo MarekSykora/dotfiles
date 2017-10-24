@@ -1,0 +1,102 @@
+[user]
+	name = Marek Sykora
+	email = mareks@boxdice.com.au
+
+[core]
+	whitespace = nowarn
+
+[mergetool]
+	keepBackup = false
+
+#[credential]
+#	helper = osxkeychain
+
+[alias]
+	br = branch -v
+	s = status -sb
+	st = status
+	stat = status
+
+	# checkout
+	co = checkout
+
+	# commit
+	c = commit -m
+	ca = commit -am
+	ci = commit
+	amend = commit --amend
+
+	# diff
+	d = diff
+	dc = diff --cached
+	last = diff HEAD^
+
+	# log
+	l = log --graph --pretty=format:'%Cred%h%Creset | %Cgreen%cr%Creset |%C(yellow)%d%Creset %s %C(magenta)<%an>%Creset' --abbrev-commit
+	ll = !"git l --name-status"
+	lll = !"git l --stat"
+	changelog = log --pretty=format:' * %s'
+
+	# rebase
+	rbi = rebase -i
+	rbc = rebase --continue
+	rbs = rebase --skip
+
+	# remote
+	r = remote -v
+
+	# create a new named branch
+	# commit any changes on that branch
+	# swap you back to the branch you started on
+	#  usage: git save foobar
+	save = !sh -c 'export PREV=$(git symbolic-ref HEAD|cut -d/ -f3-) && git checkout -b "$1" && git commit -am "$1" && git checkout "$PREV"' -
+
+	# pull origin
+	pl = pull origin
+
+	# push origin
+	ps = push origin
+[color]
+	ui = true
+
+[color "status"]
+	branch = yellow reverse
+	added = yellow
+	changed = green
+	untracked = cyan
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+	meta = yellow bold
+	frag = cyan bold
+	new = blue bold
+	old = red bold
+	whitespace = white reverse
+
+[diff]
+  # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
+  # instead of a/b/c/d as prefixes for patches
+  mnemonicprefix = true
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[push]
+	default = simple
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[mergetool "gdiff"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[merge]
+	tool = gdiff

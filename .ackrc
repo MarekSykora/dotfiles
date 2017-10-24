@@ -1,0 +1,6 @@
+--ignore-dir=log
+--ignore-dir=tmp
+--ignore-dir=.sass-cache
+--ignore-file=is:tags
+--ignore-dir=vendor
+--ignore-dir=templates_c

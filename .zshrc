@@ -96,3 +96,5 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 eval `keychain --eval --agents ssh id_rsa`
+
+unsetopt nomatch

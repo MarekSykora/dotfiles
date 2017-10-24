@@ -116,6 +116,8 @@ endif
   " disable recording
   map q <Nop>
 
+  map <Leader>n :noh<CR>
+
   map <C-J> <C-W>j
   map <C-K> <C-W>k
   map <C-L> <C-W>l
@@ -148,6 +150,9 @@ endif
   " use AckGrep
   " open current buffer file location
   map <Leader>r :NERDTreeFind<CR>
+
+  vmap <Leader>t Tabularize /:\zs<CR>
+  vmap <Leader>T Tabularize /=\zs<CR>
 " }
 
 " Plugins {
