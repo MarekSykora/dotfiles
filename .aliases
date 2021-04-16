@@ -1,25 +1,23 @@
 # paths
-alias p="cd /code/boom_all/pro"
-alias a="cd /code/boom_all/api"
-alias c="cd /code/boom_crm"
-alias co="cd /code"
-alias db="cd /code/db"
-alias fl="cd /code/files"
+alias p="cd ~/work/boom_all/pro"
+alias a="cd ~/work/boom_all/api"
+alias c="cd ~/work/boom_crm"
 
 # rails
 alias migrate="rake db:migrate && rake db:rollback && rake db:migrate && rake db:test:prepare"
 alias prepare="bundle install && rake db:migrate && rake db:test:prepare"
-alias u="rm -rf log/*.log && unicorn -c config/unicorn.rb"
-alias us="rm -rf log/*.log && unicorn -c config/unicorn_subserver.rb"
+alias u="rm -f log/*.log && unicorn -c config/unicorn.rb"
+alias us="rm -f log/*.log && unicorn -c config/unicorn_subserver.rb"
+alias usd="rm -f log/*.log && unicorn -c config/unicorn_subserver.rb -D"
+
+alias rss="r s | grep -B 4 -A 4 '#D'"
+
+alias r="echo 'rails' && bin/rails"
+alias rt="echo 'rails in test ENV' && RAILS_ENV=test bin/rails"
+alias t="echo 'rails test' && rails test"
 
 # git
-alias gps="git ps"
-alias gst="git st"
-alias gpl="git pl"
-
-#neovim
-alias vim="nvim"
-alias vi="nvim"
-
-#stuff
-alias fixtime="sudo ntpdate time.nist.gov"
+alias gps="git push"
+alias gst="git status"
+alias gpl="git pull"
+alias gco="git checkout"

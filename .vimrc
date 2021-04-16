@@ -1,10 +1,4 @@
-let g:ruby_path = system('echo $HOME/.rbenv/shims')
-
-if has('nvim')
-    let s_editor_root=expand("~/.config/nvim")
-else
-    let s_editor_root=expand("~/.vim")
-endif
+"let g:ruby_path = '/usr/local/rvm/rubies/ruby-2.1.2/bin/ruby'
 
 " Environment {
     " Basics {
@@ -83,16 +77,8 @@ endif
 
     set wildignore+=*/tmp/*
     set wildignore+=*/.sass-cache/*
-
-    set rnu
-    au BufEnter * :set rnu
-    au BufLeave * :set nu
-    au WinEnter * :set rnu
-    au WinLeave * :set nu
-    au InsertEnter * :set nu
-    au InsertLeave * :set rnu
-    au FocusLost * :set nu
-    au FocusGained * :set rnu
+    set wildignore+=*/public/packs/*
+    set wildignore+=*/public/packs-test/*
 " }
 
 " Formatting {
@@ -140,7 +126,8 @@ endif
   " Easier horizontal scrolling
   map zl zL
   map zh zH
-  map <Leader>m :CtrlPBuffer<CR>
+  map <C-p> :Files<CR>
+  map <Leader>m :Buffers<CR>
   map <Leader>s :w<CR>
   map <Leader>v <C-w>v
   map <Leader>h <C-w>s
@@ -153,30 +140,13 @@ endif
 
   vmap <Leader>t Tabularize /:\zs<CR>
   vmap <Leader>T Tabularize /=\zs<CR>
+
+  map <Leader>tn :TestNearest<CR>
+  map <Leader>tf :TestFile<CR>
 " }
 
 " Plugins {
 "
-    " CTRLP {
-        let g:ctrlp_use_caching = 0
-        if executable('ag')
-          set grepprg=ag\ --nogroup\ --nocolor
-
-          let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-        else
-          let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-          let g:ctrlp_prompt_mappings = {
-                \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
-                \ }
-        endif
-
-        let g:ctrlp_root_markers = ['.ruby-version']
-        let g:ctrlp_show_hidden=1
-        let g:ctrlp_match_window = 'bottom'
-        let g:ctrlp_switch_buffer = 1
-        let g:ctrlp_working_path_mode = 0
-    " }
-
     " PIV {
         let g:DisableAutoPHPFolding = 0
         let g:PIVAutoClose = 0
@@ -229,32 +199,36 @@ endif
 
         " See `:echo g:airline_theme_map` for some more choices
         " Default in terminal vim is 'dark'
-        if !exists('g:airline_theme')
+        "if !exists('g:airline_theme')
             "let g:airline_theme = 'ubaryd'
-        endif
-        if !exists('g:airline_powerline_fonts')
-            " Use the default set of separators with a few customizations
-            let g:airline_left_sep='›'  " Slightly fancier than '>'
-            let g:airline_right_sep='‹' " Slightly fancier than '<'
-        endif
-        let g:airline_powerline_fonts=1
-        let g:Powerline_symbols='unicode'
+        "endif
+        "if !exists('g:airline_powerline_fonts')
+            "" Use the default set of separators with a few customizations
+            "let g:airline_left_sep='›'  " Slightly fancier than '>'
+            "let g:airline_right_sep='‹' " Slightly fancier than '<'
+        "endif
+        "let g:airline_powerline_fonts=1
+        "let g:Powerline_symbols='unicode'
     " }
 
     " Syntastic {
-      let g:syntastic_check_on_open=0
-      let g:syntastic_enable_signs=0
-      let g:syntastic_echo_current_error=0
+      "let g:syntastic_always_populate_loc_list = 1
+      let g:syntastic_auto_loc_list = 1
+      "let g:syntastic_check_on_open = 0
+      "let g:syntastic_check_on_wq = 0
+      let g:syntastic_quiet_messages = { "!level":  "errors" }
+
+      let g:syntastic_javascript_checkers = ['eslint']
+      let g:syntastic_javascript_eslint_exe = 'npm run lint --'
+
+      "let g:syntastic_check_on_open=0
+      "let g:syntastic_enable_signs=0
+      "let g:syntastic_echo_current_error=0
     " }
 " }
 
 " GUI Settings {
-    if has('nvim')
-      set termguicolors
-      let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-    else
-      set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-    endif
+    set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
     colorscheme railscasts
 " }
 
@@ -303,8 +277,9 @@ endif
 "
 " Performance {
     "set lazyredraw
-    "set ttyfast
+    set ttyfast
     let loaded_matchparen = 1 " disable parenthes highlighting
+    set regexpengine=1
 " }
 " Hardmode {
     autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
@@ -333,3 +308,11 @@ endif
     map <Leader>j <Plug>(easymotion-j)
     map <Leader>k <Plug>(easymotion-k)
 " }
+"
+" Tabularize {
+    nmap t= :Tabularize /=<CR>
+    vmap t= :Tabularize /=<CR>
+    nmap t: :Tabularize /:\zs/l0r1<CR>
+    vmap t: :Tabularize /:\zs/l0r1<CR>
+" }
+    set t_ut=

@@ -1,12 +1,13 @@
 [user]
 	name = Marek Sykora
-	email = mareks@boxdice.com.au
+	email = mareks@boxdice.com
 
 [core]
 	whitespace = nowarn
+	excludesfile = /Users/mareksykora/.gitignore
 
 [mergetool]
-	keepBackup = false
+	keepBackup = true
 
 #[credential]
 #	helper = osxkeychain
@@ -51,11 +52,6 @@
 	#  usage: git save foobar
 	save = !sh -c 'export PREV=$(git symbolic-ref HEAD|cut -d/ -f3-) && git checkout -b "$1" && git commit -am "$1" && git checkout "$PREV"' -
 
-	# pull origin
-	pl = pull origin
-
-	# push origin
-	ps = push origin
 [color]
 	ui = true
 
@@ -90,13 +86,3 @@
 	required = true
 [push]
 	default = simple
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[mergetool "gdiff"]
-	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
-[merge]
-	tool = gdiff

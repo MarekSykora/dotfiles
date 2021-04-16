@@ -1,12 +1,11 @@
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/vagrant/.oh-my-zsh
+export ZSH=/Users/mareksykora/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="robbyrussell"
-ZSH_THEME="mycustom"
+ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -54,13 +53,15 @@ plugins=(git)
 
 # User configuration
 
-  export PATH="/home/vagrant/.rbenv/shims:/home/vagrant/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
+
+export PATH="/usr/local/Cellar/openssl/1.0.2t/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -89,12 +90,27 @@ if [ -e "$HOME/.aliases" ]; then
   source "$HOME/.aliases"
 fi
 
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
+export HOMEBREW_GITHUB_API_TOKEN=""
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+export PATH="/usr/local/opt/ruby/bin:$PATH"
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY="YES"
 
 eval `keychain --eval --agents ssh id_rsa`
+export PATH="/usr/local/opt/libiconv/bin:$PATH"
+export PATH="/usr/local/opt/libxml2/bin:$PATH"
+export PATH="/usr/local/opt/libxslt/bin:$PATH"
 
-unsetopt nomatch
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+setopt +o nomatch
+export PATH="/usr/local/sbin:$PATH"
+export GH_ACCESS_TOKEN=""
+export GITHUB_OAUTH_TOKEN=""
+export CLOUDFLARE_API_KEY=""
+
+export LC_ALL=en_US.UTF-8
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
