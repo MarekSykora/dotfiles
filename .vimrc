@@ -3,7 +3,8 @@
 " Environment {
     " Basics {
         set nocompatible        " Must be first line
-        set shell=/bin/zsh
+        "set shell=/bin/zsh
+        set shell=bash
     " }
 " }
 
@@ -169,7 +170,7 @@
         nmap <leader>nt :NERDTreeFind<CR>
 
         let NERDTreeShowBookmarks=1
-        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', '\.idea', '\.sass-cache']
+        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', '\.idea', '\.sass-cache', 'node_modules$']
         let NERDTreeChDirMode=0
         let NERDTreeQuitOnOpen=1
         let NERDTreeMouseMode=2
@@ -316,3 +317,14 @@
     vmap t: :Tabularize /:\zs/l0r1<CR>
 " }
     set t_ut=
+
+
+" FZF {
+    let g:fzf_preview_window = []
+    let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.3, 'relative': v:true, 'yoffset': 1.0 } }
+" }
+"
+" GIT {
+    set noshowmode
+    set updatetime=300
+" }

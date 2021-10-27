@@ -2,6 +2,7 @@
 alias p="cd ~/work/boom_all/pro"
 alias a="cd ~/work/boom_all/api"
 alias c="cd ~/work/boom_crm"
+alias ds="cd ~/work/Deploy-Scripts"
 
 # rails
 alias migrate="rake db:migrate && rake db:rollback && rake db:migrate && rake db:test:prepare"
