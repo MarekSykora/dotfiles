@@ -4,3 +4,6 @@
 --ignore-file=is:tags
 --ignore-dir=vendor
 --ignore-dir=templates_c
+--ignore-dir=.bundle
+--ignore-dir=node_modules
+--ignore-dir=public

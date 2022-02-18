@@ -1,24 +1,26 @@
 # paths
-alias p="cd ~/work/boom_all/pro"
-alias a="cd ~/work/boom_all/api"
-alias c="cd ~/work/boom_crm"
-alias ds="cd ~/work/Deploy-Scripts"
+alias wrk="cd $HOME/work"
+alias p="wrk && boom_all/pro"
+alias a="wrk && boom_all/api"
+alias c="wrk && boom_crm"
+alias ds="wrk && Deploy-Scripts"
+
+# docker
+alias dfl="wrk && dockerfiles"
+alias dce="dfl && docker compose exec"
+alias dcep="dfl && docker compose exec pro-web"
 
 # rails
-alias migrate="rake db:migrate && rake db:rollback && rake db:migrate && rake db:test:prepare"
-alias prepare="bundle install && rake db:migrate && rake db:test:prepare"
-alias u="rm -f log/*.log && unicorn -c config/unicorn.rb"
-alias us="rm -f log/*.log && unicorn -c config/unicorn_subserver.rb"
-alias usd="rm -f log/*.log && unicorn -c config/unicorn_subserver.rb -D"
+alias db:migrate="dcep ./bin/rails db:migrate"
+alias db:test:migrate="dcep ./bin/rails RAILS_ENV=test db:migrate"
 
-alias rss="r s | grep -B 4 -A 4 '#D'"
-
-alias r="echo 'rails' && bin/rails"
-alias rt="echo 'rails in test ENV' && RAILS_ENV=test bin/rails"
-alias t="echo 'rails test' && rails test"
+alias r="echo 'rails' && ./bin/rails"
+alias rt="echo 'rails in test ENV' && RAILS_ENV=test ./bin/rails"
+alias t="echo 'rails test' && ./bin/rails test"
 
 # git
 alias gps="git push"
 alias gst="git status"
 alias gpl="git pull"
 alias gco="git checkout"
+

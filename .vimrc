@@ -328,3 +328,12 @@
     set noshowmode
     set updatetime=300
 " }
+"
+" TEST {
+function! DockerTransform(cmd) abort
+  return 'cd ~/work/dockerfiles && docker-compose exec pro-web ' .a:cmd
+endfunction
+
+let g:test#custom_transformations = {'docker': function('DockerTransform')}
+let g:test#transformation = 'docker'
+" }
