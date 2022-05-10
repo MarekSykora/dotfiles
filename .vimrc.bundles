@@ -16,7 +16,7 @@ call vundle#begin()
     Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plugin 'junegunn/fzf.vim'
     Plugin 'christoomey/vim-tmux-navigator'
-    Plugin 'Lokaltog/vim-easymotion'
+    Plugin 'easymotion/vim-easymotion'
     Plugin 'flazz/vim-colorschemes'
     Plugin 'nathanaelkane/vim-indent-guides'
     Plugin 'mileszs/ack.vim'
@@ -59,6 +59,10 @@ call vundle#begin()
     Plugin 'mxw/vim-jsx'
 
     Plugin 'leafgarland/typescript-vim'
+" }
+
+" React, typescript {
+  Plugin 'peitalin/vim-jsx-typescript'
 " }
 
 call vundle#end()

@@ -9,6 +9,7 @@ alias ds="wrk && Deploy-Scripts"
 alias dfl="wrk && dockerfiles"
 alias dce="dfl && docker compose exec"
 alias dcep="dfl && docker compose exec pro-web"
+alias db:start="dfl && docker-compose -f docker-compose-mariadb.yml up"
 
 # rails
 alias db:migrate="dcep ./bin/rails db:migrate"
@@ -24,3 +25,20 @@ alias gst="git status"
 alias gpl="git pull"
 alias gco="git checkout"
 
+# deploy scripts
+alias db_host="db_host_name"
+alias app_host="app_host_name"
+
+db_host_name ()
+{
+  current_dir=`pwd`
+  ds && thor domain:db_host $1
+  cd $current_dir
+}
+
+app_host_name ()
+{
+  current_dir=`pwd`
+  ds && thor domain:app_host $1
+  cd $current_dir
+}

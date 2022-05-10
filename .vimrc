@@ -3,8 +3,8 @@
 " Environment {
     " Basics {
         set nocompatible        " Must be first line
-        "set shell=/bin/zsh
-        set shell=bash
+        set shell=/bin/zsh
+        "set shell=bash
     " }
 " }
 
@@ -304,6 +304,7 @@
 
     " Turn on case insensitive feature
     let g:EasyMotion_smartcase = 1
+    let g:EasyMotion_use_smartsign_us = 1
 
     " JK motions: Line motions
     map <Leader>j <Plug>(easymotion-j)
@@ -333,6 +334,9 @@
 function! DockerTransform(cmd) abort
   return 'cd ~/work/dockerfiles && docker-compose exec pro-web ' .a:cmd
 endfunction
+
+" set filetypes as typescriptreact
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact"
 
 let g:test#custom_transformations = {'docker': function('DockerTransform')}
 let g:test#transformation = 'docker'
